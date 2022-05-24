@@ -20,3 +20,18 @@ Capture matches/replace by regex
 -h|--help
         Show this message
 ```
+
+### Examples
+
+```bash
+# Matches
+$ cligex -t Test123 -s \d
+1
+2
+3
+
+# Replace
+$ cligex -t Test123 -s \d+ -r 321
+Test321
+
+```
