@@ -71,10 +71,6 @@ namespace Cligex
 					Regex.Replace(text, search, replace)
 				);
 			}
-			else
-			{
-				command.Help();
-			}
 		}
 	}
 }

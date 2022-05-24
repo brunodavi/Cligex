@@ -31,21 +31,43 @@ namespace Cligex.CommandLineGenerator
 
 			foreach (Option option in _options)
 			{
-				Match match = Regex.Match
+				string optionsLongName = String.Join
 				(
-					commandLine,
-					@$"(?<=-{option.ShortOption} |--{option.LongOption} ).+?(?=(?:\s+(?:-\w|--\w+)|$))"
+					"|",
+
+					_options
+					.Where((x) => x.LongOption != option.LongOption)
+					.Select((x) => x.LongOption)
 				);
 
-				if  (match.Success)
+				string optionsShortName = String.Join
+				(
+					"",
+
+					_options
+					.Where((x) => x.ShortOption != option.ShortOption)
+					.Select((x) => x.ShortOption)
+				);
+
+				string patternCommands = $"-{option.ShortOption}|--{option.LongOption}"; 
+				string pattern = @$"(?:{patternCommands})\s+(.+?)(?=(?:\s+(?:-[{optionsShortName}]|--(?:{optionsLongName})+)|$))";
+				
+				if (Regex.IsMatch(commandLine, patternCommands))
 				{
-					option.Value = match.Value;
+					Match match = Regex.Match
+					(
+						commandLine,
+						pattern
+					);
+
+					if  (match.Success)
+					{
+						option.Value = match.Groups[1].Value;
+					}
+
 					_dict_options.Add(option.LongOption, option);
 				}
-				else if (option.Required)
-				{
-					throw new ArgumentException($"Missing option '-{option.ShortOption}/--{option.LongOption} <value>");
-				}
+
 			}
 		}
 
