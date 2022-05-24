@@ -2,7 +2,7 @@
 
 command to test regex by terminal
 
-```bash
+```
 Usage:
         cligex -t, --text | -s, --search | [ -r, --replace ] | [ -h, --help ]
 
