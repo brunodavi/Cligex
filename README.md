@@ -1,6 +1,6 @@
 # Cligex
 
-command to test regex by terminal
+command to test regex from terminal
 
 ```
 Usage:
